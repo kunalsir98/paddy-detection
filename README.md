@@ -1,48 +1,248 @@
-import sys 
-import os 
-from src.logger import logging 
-from src.exception import CustomException
-import pandas as pd
-from sklearn.model_selection import train_test_split 
-from dataclasses import dataclass 
-from src.components.data_transformation import DataTransformation
+C:\Users\ACER\Pictures\Screenshot (16).png
 
-#creating the data Ingestion Configuration
-@dataclass
-class DataIngestionConfig:
-    train_data_path:str=os.path.join('artifacts','train.csv')
-    test_data_path:str=os.path.join('artifacts','test.csv')
-    raw_data_path:str=os.path.join('artifacts','raw.csv')
+# 🌾 Paddy Yield Prediction System using Machine Learning
 
-#creating the data Ingestion Class 
-class DataIngestion:
-    def __init__(self):
-        self.ingestion_config=DataIngestionConfig()
-    
-    def initiate_data_ingestion(self):
-        try:
-            df=pd.read_csv(os.path.join('notebook/data.csv'))
-            logging.info('DataFrame Readen as pandas DataFrame ')
-            os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path),exist_ok=True)
-            df.to_csv(self.ingestion_config.raw_data_path,index=False)
-            logging.info('Train Test Split Initiated')
-            train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
-            logging.info('Train Test Split Completed')
-            train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
-            test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
-            logging.info('Ingestion of the data is completed Succesfully')
+A complete end-to-end Machine Learning Regression project for predicting **Paddy Yield (Kg)** using agricultural, environmental, weather, and fertilizer-related parameters.
 
-            return(
-                self.ingestion_config.train_data_path,
-                self.ingestion_config.test_data_path
-            )
-            
-        except Exception as e:
-            logging.info('Exception occured at data Ingestion Stage')
-            raise CustomException(e,sys)
+The project includes:
 
-if __name__=="__main__":
-    obj=DataIngestion()
-    train_data,test_data=obj.initiate_data_ingestion()
-    data_transformation=DataTransformation()
-    train_arr,test_arr,_=data_transformation.initiate_data_transformation(train_data,test_data)
+- Data preprocessing pipeline
+- Model training pipeline
+- Prediction pipeline
+- Flask web application
+- Modern responsive UI
+- Production-ready project structure
+
+---
+
+# 🚀 Project Demo
+
+## Home Page
+- Modern AI-powered landing page
+
+## Prediction Form
+- Agriculture input form
+- Weather & environmental features
+- Fertilizer details
+- Wind & humidity details
+
+## Prediction Result
+- Predicts Paddy Yield in **Kilograms (Kg)**
+
+---
+
+# 📂 Project Structure
+
+```bash
+paddy_dataset/
+│
+├── artifacts/
+│   ├── model.pkl
+│   └── preprocessor.pkl
+│
+├── notebook/
+│
+├── src/
+│   ├── components/
+│   ├── pipeline/
+│   │   └── prediction_pipeline.py
+│   │
+│   ├── exception.py
+│   ├── logger.py
+│   └── utils.py
+│
+├── templates/
+│   ├── index.html
+│   ├── form.html
+│   └── results.html
+│
+├── app.py
+├── requirements.txt
+├── setup.py
+└── README.md
+```
+
+---
+
+# 📊 Features Used
+
+The model uses the following agricultural and environmental features:
+
+- Hectares
+- Agriblock
+- Variety
+- Soil Types
+- Seedrate
+- Fertilizer Information
+- Nursery Information
+- Rainfall Data
+- Artificial Irrigation
+- Temperature Data
+- Wind Speed
+- Wind Direction
+- Relative Humidity
+- Trash Bundles
+
+---
+
+# 🧠 Machine Learning Workflow
+
+## 1. Data Ingestion
+- Read dataset
+- Split train/test data
+
+## 2. Data Transformation
+- Missing value handling
+- Encoding categorical columns
+- Feature scaling
+
+## 3. Model Training
+Regression models used:
+- Linear Regression
+- Random Forest Regressor
+- Decision Tree Regressor
+- XGBoost Regressor
+- CatBoost Regressor
+
+## 4. Model Evaluation
+Metrics:
+- R² Score
+- MAE
+- MSE
+- RMSE
+
+## 5. Model Deployment
+- Flask web application
+- Real-time prediction
+
+---
+
+# ⚙️ Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/yourusername/paddy-yield-prediction.git
+```
+
+---
+
+## Create Virtual Environment
+
+```bash
+conda create -p venv python=3.10 -y
+```
+
+Activate Environment:
+
+```bash
+conda activate venv/
+```
+
+---
+
+## Install Requirements
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# ▶️ Run Application
+
+```bash
+python app.py
+```
+
+Application runs on:
+
+```bash
+http://127.0.0.1:5000
+```
+
+---
+
+# 🖥️ Flask Application
+
+The Flask app performs:
+
+- User input collection
+- Data conversion into DataFrame
+- Data preprocessing
+- Model prediction
+- Result rendering
+
+---
+
+# 📌 Example Prediction
+
+## Input
+
+| Feature | Value |
+|---|---|
+| Hectares | 2.5 |
+| Seedrate | 45 |
+| Rainfall | 120 |
+| Humidity | 78 |
+
+## Output
+
+```bash
+Predicted Paddy Yield: 4520.76 Kg
+```
+
+---
+
+# 🛠️ Technologies Used
+
+## Programming Language
+- Python
+
+## Libraries
+- Pandas
+- NumPy
+- Scikit-learn
+- CatBoost
+- XGBoost
+- Flask
+- Pickle
+
+## Frontend
+- HTML
+- CSS
+- Responsive UI
+
+---
+
+# 📈 Future Improvements
+
+- Docker Deployment
+- AWS Deployment
+- CI/CD Pipeline
+- MLOps Integration
+- Streamlit Dashboard
+- Model Monitoring
+
+---
+
+# 👨‍💻 Author
+
+Developed by:
+
+**Your Name**
+
+---
+
+# ⭐ If you like this project
+
+Give this repository a ⭐ on GitHub.
+
+---
+
+# 📧 Contact
+
+For queries or collaboration:
+
+- Email: your_email@gmail.com
+- LinkedIn: your_linkedin_profile
