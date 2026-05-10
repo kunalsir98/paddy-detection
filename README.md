@@ -1,4 +1,4 @@
-C:\Users\ACER\Pictures\Screenshot (16).png
+![alt text](<Screenshot (16).png>)
 
 # 🌾 Paddy Yield Prediction System using Machine Learning
 
