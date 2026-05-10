@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yield Insight | Paddy Forecast</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: radial-gradient(circle at 70% 20%, #0C2320, #030B0A);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+        }
+
+        .result-card {
+            background: rgba(12, 26, 24, 0.65);
+            backdrop-filter: blur(20px);
+            border-radius: 3rem;
+            border: 1px solid rgba(20, 184, 166, 0.4);
+            padding: 2.8rem 2rem;
+            max-width: 620px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 30px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(45, 212, 191, 0.2) inset;
+            transition: transform 0.25s ease;
+            animation: riseUp 0.6s ease-out;
+        }
+
+        @keyframes riseUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result-icon {
+            font-size: 4rem;
+            background: linear-gradient(145deg, #14B8A6, #0F766E);
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.3);
+        }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, #A5F3E6, #5EEAD4);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .yield-value {
+            font-size: 4rem;
+            font-weight: 800;
+            color: #FEF9E3;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            background: linear-gradient(145deg, #FFFFFF, #C4F0E6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin: 0.5rem 0 0.25rem;
+            line-height: 1.2;
+        }
+
+        .yield-unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #8CBEB4;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #14B8A6, #2dd4bf, #0F766E);
+            margin: 1rem auto;
+            border-radius: 4px;
+        }
+
+        .insight-text {
+            color: #CEEBE5;
+            font-size: 0.9rem;
+            margin: 1.5rem 0 2rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.7rem;
+            border-radius: 2rem;
+            display: inline-block;
+            backdrop-filter: blur(2px);
+        }
+
+        .action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(115deg, #0F766E, #14B8A6);
+            padding: 0.9rem 2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .action-btn:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(115deg, #1A9E8C, #2DD4BF);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 500px) {
+            .result-card {
+                padding: 2rem 1.2rem;
+            }
+            .yield-value {
+                font-size: 2.8rem;
+            }
+            .result-icon {
+                width: 70px;
+                height: 70px;
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="result-card">
+        <div class="result-icon">🌾⚡</div>
+        <h2>Forecasted Yield Output</h2>
+        <div class="yield-value">{{ final_result }}</div>
+        <div class="yield-unit">tonnes per hectare · estimated production</div>
+        <div class="divider"></div>
+        <div class="insight-text">
+            📍 AI-driven recommendation based on field data & nutrient profile
+        </div>
+        <a href="/predict" class="action-btn">
+            <span>⟳</span>
+            <span>New Prediction</span>
+        </a>
+    </div>
+</body>
+</html>

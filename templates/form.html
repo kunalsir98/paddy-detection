@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yield Predictor | Smart Paddy Form</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(ellipse at 20% 30%, #0B1B1A, #030A09);
+            min-height: 100vh;
+            padding: 2rem;
+            color: #EFF6F5;
+        }
+
+        .form-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(18, 30, 32, 0.55);
+            backdrop-filter: blur(18px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(20, 184, 166, 0.3);
+            padding: 2.2rem 2rem 2.5rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+            transition: 0.3s;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            background: linear-gradient(120deg, #C4F5E8, #2DD4BF);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-sub {
+            text-align: center;
+            color: #99C7BF;
+            margin-bottom: 2.8rem;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+            border-bottom: 1px dashed rgba(45, 212, 191, 0.3);
+            display: inline-block;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            padding-bottom: 0.5rem;
+        }
+
+        /* section cards */
+        .section-card {
+            background: rgba(6, 20, 19, 0.5);
+            border-radius: 1.8rem;
+            padding: 1.4rem 1.6rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #14b8a6;
+            transition: all 0.2s;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            margin-bottom: 1.2rem;
+            color: #BCF0E6;
+            letter-spacing: -0.2px;
+        }
+
+        .section-title i {
+            font-size: 1.6rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem 1.8rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #BEDAD4;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .input-group label span {
+            font-size: 0.7rem;
+            background: #1F4E47;
+            padding: 1px 6px;
+            border-radius: 20px;
+            color: #CFFAFE;
+        }
+
+        input, select {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(20, 184, 166, 0.5);
+            padding: 12px 16px;
+            border-radius: 1.2rem;
+            font-size: 0.95rem;
+            color: white;
+            font-weight: 500;
+            outline: none;
+            transition: all 0.25s;
+            font-family: 'Inter', monospace;
+        }
+
+        input:focus {
+            border-color: #2dd4bf;
+            box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.3);
+            background: rgba(10, 32, 30, 0.7);
+            transform: scale(1.01);
+        }
+
+        input::placeholder {
+            color: #6C9690;
+            font-weight: 400;
+            font-size: 0.8rem;
+        }
+
+        button {
+            background: linear-gradient(105deg, #0F766E, #14B8A6);
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 1.2rem;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.5px;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            background: linear-gradient(105deg, #1A9E8C, #2DD4BF);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
+
+        .btn-loading {
+            opacity: 0.8;
+            pointer-events: none;
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 750px) {
+            body {
+                padding: 1rem;
+            }
+            .form-container {
+                padding: 1.5rem;
+            }
+            .section-card {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* custom number spinner */
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div class="form-container">
+    <h1>📊 Precision Paddy Predictor</h1>
+    <div class="form-sub">Fill agronomic & crop management details</div>
+
+    <form action="/predict" method="POST" id="predictionForm">
+        <!-- SECTION 1: LAND & BASIC INFO -->
+        <div class="section-card">
+            <div class="section-title">
+                🌾 Land & Cultivar Basis
+            </div>
+            <div class="grid-4">
+                <div class="input-group">
+                    <label>📐 Hectares <span>(area)</span></label>
+                    <input type="number" step="any" name="hectares" placeholder="e.g., 2.5" required>
+                </div>
+                <div class="input-group">
+                    <label>🗺️ Agriblock</label>
+                    <input type="text" name="agriblock" placeholder="Block name / ID" required>
+                </div>
+                <div class="input-group">
+                    <label>🌱 Variety</label>
+                    <input type="text" name="variety" placeholder="e.g., IR64, Swarna" required>
+                </div>
+                <div class="input-group">
+                    <label>🧫 Soil Types</label>
+                    <input type="text" name="soil_types" placeholder="Clay, Loamy, Sandy" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: SEEDING & NURSERY MANAGEMENT -->
+        <div class="section-card">
+            <div class="section-title">
+                🌿 Seeding & Nursery Details
+            </div>
+            <div class="grid-4">
+                <div class="input-group">
+                    <label>🌾 Seedrate (Kg)</label>
+                    <input type="number" step="any" name="seedrate_in_kg" placeholder="kg per hectare" required>
+                </div>
+                <div class="input-group">
+                    <label>📦 LP_Mainfield (Tonnes)</label>
+                    <input type="number" step="any" name="lp_mainfield_in_tonnes" placeholder="baseline yield" required>
+                </div>
+                <div class="input-group">
+                    <label>🧺 Nursery type</label>
+                    <input type="text" name="nursery" placeholder="Wet / Dry / Mat" required>
+                </div>
+                <div class="input-group">
+                    <label>📏 Nursery area (Cents)</label>
+                    <input type="number" step="any" name="nursery_area_cents" placeholder="in cents" required>
+                </div>
+                <div class="input-group">
+                    <label>📈 LP_nurseryarea (Tonnes)</label>
+                    <input type="number" step="any" name="lp_nurseryarea_in_tonnes" placeholder="nursery productivity" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: NUTRIENTS & PEST MANAGEMENT -->
+        <div class="section-card">
+            <div class="section-title">
+                🧪 Fertilizers & Crop Protection
+            </div>
+            <div class="grid-4">
+                <div class="input-group">
+                    <label>💊 DAP_20days (kg)</label>
+                    <input type="number" step="any" name="dap_20days" placeholder="kg applied" required>
+                </div>
+                <div class="input-group">
+                    <label>🌿 Weed28D_thiobencarb</label>
+                    <input type="number" step="any" name="weed28d_thiobencarb" placeholder="litres / kg" required>
+                </div>
+                <div class="input-group">
+                    <label>🧪 Urea_40Days (kg)</label>
+                    <input type="number" step="any" name="urea_40days" placeholder="nitrogen top-dress" required>
+                </div>
+                <div class="input-group">
+                    <label>🥔 Potassh_50Days (kg)</label>
+                    <input type="number" step="any" name="potassh_50days" placeholder="potassium supplement" required>
+                </div>
+                <div class="input-group">
+                    <label>🔬 Micronutrients_70Days</label>
+                    <input type="number" step="any" name="micronutrients_70days" placeholder="Zn, Fe mix" required>
+                </div>
+                <div class="input-group">
+                    <label>🐛 Pest_60Day (ml)</label>
+                    <input type="number" step="any" name="pest_60day_in_ml" placeholder="insecticide volume" required>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" id="submitBtn">
+            <span>🤖 Predict Yield</span>
+            <span>⚡</span>
+        </button>
+    </form>
+</div>
+
+<script>
+    (function() {
+        const form = document.getElementById('predictionForm');
+        const submitBtn = document.getElementById('submitBtn');
+        if (form && submitBtn) {
+            form.addEventListener('submit', function(e) {
+                // Simple loading state to enhance UX
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<span>⏳ Analyzing ...</span><span>🌾</span>';
+                submitBtn.classList.add('btn-loading');
+                // Keep disabled to avoid double post (will redirect anyway)
+                setTimeout(() => {
+                    // if something hangs, but form will submit natively
+                }, 50);
+                // No preventDefault so actual POST proceeds
+            });
+        }
+    })();
+</script>
+</body>
+</html>
