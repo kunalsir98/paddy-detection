@@ -1,5 +1,7 @@
 ![alt text](<Screenshot (16).png>)
 
+![alt text](<Screenshot (17).png>)
+
 # 🌾 Paddy Yield Prediction System using Machine Learning
 
 A complete end-to-end Machine Learning Regression project for predicting **Paddy Yield (Kg)** using agricultural, environmental, weather, and fertilizer-related parameters.
